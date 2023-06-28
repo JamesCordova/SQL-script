@@ -1,0 +1,275 @@
+﻿/*
+Created: 21/6/2023
+Modified: 27/6/2023
+Model: SQL new 8.0
+Database: MySQL 8.0
+*/
+
+-- Create tables section -------------------------------------------------
+
+-- Table ESTADO_REGISTRO
+
+CREATE TABLE `ESTADO_REGISTRO`
+(
+  `EstReg` Char(1) NOT NULL,
+  `EstRegDes` Char(32),
+  `FK_EstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship48` ON `ESTADO_REGISTRO` (`FK_EstReg`)
+;
+
+ALTER TABLE `ESTADO_REGISTRO` ADD PRIMARY KEY (`EstReg`)
+;
+
+-- Table TORNEO
+
+CREATE TABLE `TORNEO`
+(
+  `TorCod` Int(6) NOT NULL,
+  `TorNom` Char(40),
+  `TorEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship27` ON `TORNEO` (`TorEstReg`)
+;
+
+ALTER TABLE `TORNEO` ADD PRIMARY KEY (`TorCod`)
+;
+
+-- Table CLIENTE
+
+CREATE TABLE `CLIENTE`
+(
+  `CliCod` Int(7) NOT NULL,
+  `CliDni` Int(8),
+  `CliNom` Char(60),
+  `CliEstReg` Char(1) NOT NULL,
+  `Attribute1` Char(20)
+)
+;
+
+CREATE INDEX `IX_Relationship31` ON `CLIENTE` (`CliEstReg`)
+;
+
+ALTER TABLE `CLIENTE` ADD PRIMARY KEY (`CliCod`)
+;
+
+-- Table EQUIPO_VISITANTE
+
+CREATE TABLE `EQUIPO_VISITANTE`
+(
+  `EquVisCod` Int(6) NOT NULL,
+  `EquCod` Int(6),
+  `EquVisEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship26` ON `EQUIPO_VISITANTE` (`EquVisEstReg`)
+;
+
+CREATE INDEX `IX_Relationship54` ON `EQUIPO_VISITANTE` (`EquCod`)
+;
+
+ALTER TABLE `EQUIPO_VISITANTE` ADD PRIMARY KEY (`EquVisCod`)
+;
+
+-- Table EQUIPO_LOCAL
+
+CREATE TABLE `EQUIPO_LOCAL`
+(
+  `EquLocCod` Int(6) NOT NULL,
+  `EquCod` Int(6),
+  `EquLocEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship25` ON `EQUIPO_LOCAL` (`EquLocEstReg`)
+;
+
+CREATE INDEX `IX_Relationship55` ON `EQUIPO_LOCAL` (`EquCod`)
+;
+
+ALTER TABLE `EQUIPO_LOCAL` ADD PRIMARY KEY (`EquLocCod`)
+;
+
+-- Table APUESTA_CAB
+
+CREATE TABLE `APUESTA_CAB`
+(
+  `ApuCod` Int(10) NOT NULL,
+  `ApuCliCod` Int(7) NOT NULL,
+  `ApuAfiCod` Char(11),
+  `ApuFecAño` Int(4),
+  `ApuFecMes` Int(2),
+  `ApuFecDia` Int(2),
+  `ApuFecHor` Int(2),
+  `ApuFecMin` Int(2),
+  `ApuTip` Char(32),
+  `ApuValApo` Decimal(8,2),
+  `ApuEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship39` ON `APUESTA_CAB` (`ApuAfiCod`)
+;
+
+CREATE INDEX `IX_Relationship51` ON `APUESTA_CAB` (`ApuEstReg`)
+;
+
+ALTER TABLE `APUESTA_CAB` ADD PRIMARY KEY (`ApuCod`)
+;
+
+-- Table PARTIDO
+
+CREATE TABLE `PARTIDO`
+(
+  `ParCod` Char(9) NOT NULL,
+  `ParTorCod` Int(6),
+  `ParEquLocCod` Int(6) NOT NULL,
+  `ParEquVisCod` Int(6) NOT NULL,
+  `ParFecAño` Int(4),
+  `ParFecMes` Int(2),
+  `ParFecDia` Int(2),
+  `ParFecHor` Int(2),
+  `ParFecMin` Int(2),
+  `ParGanCod` Int(6),
+  `ParEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship29` ON `PARTIDO` (`ParEstReg`)
+;
+
+CREATE INDEX `IX_Relationship40` ON `PARTIDO` (`ParTorCod`)
+;
+
+CREATE INDEX `IX_Relationship42` ON `PARTIDO` (`ParEquLocCod`)
+;
+
+CREATE INDEX `IX_Relationship43` ON `PARTIDO` (`ParEquVisCod`)
+;
+
+CREATE INDEX `IX_Relationship56` ON `PARTIDO` (`ParGanCod`)
+;
+
+ALTER TABLE `PARTIDO` ADD PRIMARY KEY (`ParCod`)
+;
+
+-- Table AFILIADO
+
+CREATE TABLE `AFILIADO`
+(
+  `AfiCod` Char(11) NOT NULL,
+  `AfiNom` Char(32),
+  `AfiEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship37` ON `AFILIADO` (`AfiEstReg`)
+;
+
+ALTER TABLE `AFILIADO` ADD PRIMARY KEY (`AfiCod`)
+;
+
+-- Table APUESTA_DET
+
+CREATE TABLE `APUESTA_DET`
+(
+  `ApuDetCod` Int(10) NOT NULL,
+  `ApuCabCod` Int(10) NOT NULL,
+  `ApuDetParCod` Char(9),
+  `ApuDetCuo` Decimal(8,2),
+  `ApuDetEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship50` ON `APUESTA_DET` (`ApuDetParCod`)
+;
+
+CREATE INDEX `IX_Relationship52` ON `APUESTA_DET` (`ApuDetEstReg`)
+;
+
+ALTER TABLE `APUESTA_DET` ADD PRIMARY KEY (`ApuDetCod`, `ApuCabCod`)
+;
+
+-- Table EQUIPO
+
+CREATE TABLE `EQUIPO`
+(
+  `EquCod` Int(6) NOT NULL,
+  `EquNom` Char(16),
+  `EquEstReg` Char(1) NOT NULL
+)
+;
+
+CREATE INDEX `IX_Relationship53` ON `EQUIPO` (`EquEstReg`)
+;
+
+ALTER TABLE `EQUIPO` ADD PRIMARY KEY (`EquCod`)
+;
+
+-- Create foreign keys (relationships) section -------------------------------------------------
+
+ALTER TABLE `EQUIPO_LOCAL` ADD CONSTRAINT `Int_Estado_Registro_Equipo_Local` FOREIGN KEY (`EquLocEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `EQUIPO_VISITANTE` ADD CONSTRAINT `Int_Estado_Registro_Equipo_Visitante` FOREIGN KEY (`EquVisEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `TORNEO` ADD CONSTRAINT `Int_Estado_Registro_Torneo` FOREIGN KEY (`TorEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `PARTIDO` ADD CONSTRAINT `Int_Estado_Registro_Partido` FOREIGN KEY (`ParEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `CLIENTE` ADD CONSTRAINT `Int_Estado_Registro_Cliente` FOREIGN KEY (`CliEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `APUESTA_CAB` ADD CONSTRAINT `Int_Cliente_Apuesta_Cab` FOREIGN KEY (`ApuCliCod`) REFERENCES `CLIENTE` (`CliCod`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `AFILIADO` ADD CONSTRAINT `Int_Estado_Registro_Afiliado` FOREIGN KEY (`AfiEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `APUESTA_CAB` ADD CONSTRAINT `Int_Afiliado_Apuesta_Cab` FOREIGN KEY (`ApuAfiCod`) REFERENCES `AFILIADO` (`AfiCod`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `PARTIDO` ADD CONSTRAINT `Int_Torneo_Partido` FOREIGN KEY (`ParTorCod`) REFERENCES `TORNEO` (`TorCod`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `PARTIDO` ADD CONSTRAINT `Int_Equipo_Local_Partido` FOREIGN KEY (`ParEquLocCod`) REFERENCES `EQUIPO_LOCAL` (`EquLocCod`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `PARTIDO` ADD CONSTRAINT `Int_Equipo_Visitante_Partido` FOREIGN KEY (`ParEquVisCod`) REFERENCES `EQUIPO_VISITANTE` (`EquVisCod`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE `ESTADO_REGISTRO` ADD CONSTRAINT `Int_Estado_Registro_Estado_Registro` FOREIGN KEY (`FK_EstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `APUESTA_DET` ADD CONSTRAINT `Int_Apuesta_Cab_Apuesta_Det` FOREIGN KEY (`ApuCabCod`) REFERENCES `APUESTA_CAB` (`ApuCod`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `APUESTA_DET` ADD CONSTRAINT `Int_Partido_Apuesta_Det` FOREIGN KEY (`ApuDetParCod`) REFERENCES `PARTIDO` (`ParCod`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `APUESTA_CAB` ADD CONSTRAINT `Int_Estado_Registro_Apuesta_Cab` FOREIGN KEY (`ApuEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `APUESTA_DET` ADD CONSTRAINT `Int_Estado_Registro_Apuesta_Det` FOREIGN KEY (`ApuDetEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `EQUIPO` ADD CONSTRAINT `Int_Estado_Registro_Equipo` FOREIGN KEY (`EquEstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `EQUIPO_VISITANTE` ADD CONSTRAINT `Int_Equipo_Equipo_Visitante` FOREIGN KEY (`EquCod`) REFERENCES `EQUIPO` (`EquCod`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `EQUIPO_LOCAL` ADD CONSTRAINT `Int_Equipo_Equipo_Local` FOREIGN KEY (`EquCod`) REFERENCES `EQUIPO` (`EquCod`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `PARTIDO` ADD CONSTRAINT `Int_Equipo_Partido` FOREIGN KEY (`ParGanCod`) REFERENCES `EQUIPO` (`EquCod`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
