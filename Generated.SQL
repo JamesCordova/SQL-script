@@ -1,6 +1,6 @@
 ﻿/*
 Created: 21/6/2023
-Modified: 27/6/2023
+Modified: 18/7/2023
 Model: SQL new 8.0
 Database: MySQL 8.0
 */
@@ -13,11 +13,8 @@ CREATE TABLE `ESTADO_REGISTRO`
 (
   `EstReg` Char(1) NOT NULL,
   `EstRegDes` Char(32),
-  `FK_EstReg` Char(1) NOT NULL
+  `EstRegEstReg` Char(1) NOT NULL
 )
-;
-
-CREATE INDEX `IX_Relationship48` ON `ESTADO_REGISTRO` (`FK_EstReg`)
 ;
 
 ALTER TABLE `ESTADO_REGISTRO` ADD PRIMARY KEY (`EstReg`)
@@ -46,8 +43,7 @@ CREATE TABLE `CLIENTE`
   `CliCod` Int(7) NOT NULL,
   `CliDni` Int(8),
   `CliNom` Char(60),
-  `CliEstReg` Char(1) NOT NULL,
-  `Attribute1` Char(20)
+  `CliEstReg` Char(1) NOT NULL
 )
 ;
 
@@ -200,7 +196,7 @@ ALTER TABLE `APUESTA_DET` ADD PRIMARY KEY (`ApuDetCod`, `ApuCabCod`)
 CREATE TABLE `EQUIPO`
 (
   `EquCod` Int(6) NOT NULL,
-  `EquNom` Char(16),
+  `EquNom` Char(32) NOT NULL,
   `EquEstReg` Char(1) NOT NULL
 )
 ;
@@ -209,6 +205,9 @@ CREATE INDEX `IX_Relationship53` ON `EQUIPO` (`EquEstReg`)
 ;
 
 ALTER TABLE `EQUIPO` ADD PRIMARY KEY (`EquCod`)
+;
+
+ALTER TABLE `EQUIPO` ADD UNIQUE `EquNom` (`EquNom`)
 ;
 
 -- Create foreign keys (relationships) section -------------------------------------------------
@@ -244,9 +243,6 @@ ALTER TABLE `PARTIDO` ADD CONSTRAINT `Int_Equipo_Local_Partido` FOREIGN KEY (`Pa
 ;
 
 ALTER TABLE `PARTIDO` ADD CONSTRAINT `Int_Equipo_Visitante_Partido` FOREIGN KEY (`ParEquVisCod`) REFERENCES `EQUIPO_VISITANTE` (`EquVisCod`) ON DELETE NO ACTION ON UPDATE NO ACTION
-;
-
-ALTER TABLE `ESTADO_REGISTRO` ADD CONSTRAINT `Int_Estado_Registro_Estado_Registro` FOREIGN KEY (`FK_EstReg`) REFERENCES `ESTADO_REGISTRO` (`EstReg`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
 ALTER TABLE `APUESTA_DET` ADD CONSTRAINT `Int_Apuesta_Cab_Apuesta_Det` FOREIGN KEY (`ApuCabCod`) REFERENCES `APUESTA_CAB` (`ApuCod`) ON DELETE RESTRICT ON UPDATE RESTRICT

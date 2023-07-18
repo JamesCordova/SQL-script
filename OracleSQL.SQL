@@ -221,7 +221,7 @@ ALTER TABLE "APUESTA_DET" ADD CONSTRAINT "PK_APUESTA_DET" PRIMARY KEY ("ApuDetCo
 
 CREATE TABLE "EQUIPO"(
   "EquCod" Integer NOT NULL,
-  "EquNom" Char(24 ),
+  "EquNom" Char(32 ) NOT NULL,
   "EquEstReg" Char(1 ) NOT NULL
 )
 /
@@ -234,6 +234,9 @@ CREATE INDEX "IX_Relationship53" ON "EQUIPO" ("EquEstReg")
 -- Add keys for table EQUIPO
 
 ALTER TABLE "EQUIPO" ADD CONSTRAINT "PK_EQUIPO" PRIMARY KEY ("EquCod")
+/
+
+ALTER TABLE "EQUIPO" ADD CONSTRAINT "EquNom" UNIQUE ("EquNom")
 /
 
 
