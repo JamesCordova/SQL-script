@@ -1,4 +1,4 @@
--------- Consulta combinada ---------
+-------- Consulta anidada ---------
 /* Consulta que busca el detalle de una apuesta cabecera con Codigo "1390001230"
  mostrando solo el codigo de detalle, cabcera relacionada, codigo de partido y 
  cuota asociada */

@@ -1,0 +1,10 @@
+/* Procedimiento almacenado para mostrar vistas ya creadas */
+DELIMITER //
+CREATE PROCEDURE `PR_MOSTRAR_VISTAS_CREADAS` ()
+BEGIN
+  -- Ejecutar vistas
+  SELECT * FROM VISTA_APUESTA_CABECERA_DETALLE;
+  SELECT * FROM VISTA_EQUIPO_LOCAL_NOMBRES;
+END 
+//
+DELIMITER ;

@@ -1,4 +1,4 @@
-/* Trigger para cambiar el EstReg en base a su apuesta cabecera */
+/* Trigger simple para cambiar el EstReg en base a su apuesta cabecera */
 DELIMITER //
 CREATE TRIGGER `TRIGGER_APUESTA_CAB_UPDATE`
 AFTER UPDATE ON `APUESTA_CAB`

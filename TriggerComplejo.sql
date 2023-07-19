@@ -1,7 +1,7 @@
-/* Trigger para mandar un error si el partido con los mismos equipos y fecha ya esta creado */
+/* Trigger Complejo para mandar un error si el partido con los mismos equipos y fecha ya esta creado */
 DELIMITER //
-CREATE TRIGGER `TRIGGER_PARTIDO_INSERT`
-AFTER INSERT ON `PARTIDO`
+CREATE TRIGGER `TRIGGER_PARTIDO_INSERT_BEFORE`
+BEFORE INSERT ON `PARTIDO`
 FOR EACH ROW
 BEGIN
     /* Variables locales para almacenar el código de equipo local, el código de equipo visitante y la fecha/hora del partido */
