@@ -4,5 +4,5 @@ en apuestas según la cabecera */
 SELECT
   AD.ApuCabCod AS ApuestaCabecera,
   AVG(AD.ApuDetCuo) AS CuotaPromedio
-FROM APUESTA_DET AS AD
+FROM APUESTA_DET AD
 GROUP BY AD.ApuCabCod;

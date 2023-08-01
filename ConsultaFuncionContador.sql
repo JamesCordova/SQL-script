@@ -4,7 +4,7 @@
 SELECT
   C.CliNom AS Cliente,
   COUNT(AC.ApuCod) AS TotalApuestas
-FROM APUESTA_CAB AS AC 
-JOIN APUESTA_DET AS AD on AC.ApuCod = AD.ApuCabCod
-JOIN CLIENTE AS C ON AC.ApuCliCod = C.CliCod
+FROM APUESTA_CAB AC 
+JOIN APUESTA_DET AD on AC.ApuCod = AD.ApuCabCod
+JOIN CLIENTE C ON AC.ApuCliCod = C.CliCod
 GROUP BY C.CliNom;

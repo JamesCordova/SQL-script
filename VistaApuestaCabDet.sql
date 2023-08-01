@@ -1,6 +1,6 @@
--------- View apuesta cabecera y detalle ---------
-/* Vista para mostrar la cabecera y detalle relacionado */
-CREATE VIEW `VISTA_APUESTA_CABECERA_DETALLE` AS
+----- Vista de cabeceras ---
+/* Mostrar cabceras de apuestas */
+CREATE OR REPLACE VIEW VISTA_APUESTA_CABECERA_DETALLE AS
 SELECT
   AC.ApuCod AS Apuesta_Cabecera,
   C.CliNom AS Cliente,
@@ -17,14 +17,14 @@ SELECT
   EVis.EquNom AS Equipo_Visitante,
   AD.ApuDetCuo AS Cuota,
   EGan.EquNom AS Equipo_Ganador
-FROM APUESTA_CAB AS AC
-JOIN APUESTA_DET AS AD ON AC.ApuCod = AD.ApuCabCod
-JOIN CLIENTE AS C ON AC.ApuCliCod = C.CliCod
-LEFT JOIN AFILIADO AS A ON AC.ApuAfiCod = A.AfiCod
-JOIN PARTIDO AS P ON AD.ApuDetParCod = P.ParCod
-JOIN EQUIPO_LOCAL AS EL ON P.ParEquLocCod = EL.EquLocCod
-JOIN EQUIPO AS ELoc ON EL.EquCod = ELoc.EquCod
-JOIN EQUIPO_VISITANTE AS EV ON P.ParEquVisCod = EV.EquVisCod
-JOIN EQUIPO AS EVis ON EV.EquCod = EVis.EquCod
-JOIN TORNEO AS T ON P.ParTorCod = T.TorCod
-LEFT JOIN EQUIPO AS EGan ON P.ParGanCod = EGan.EquCod;
+FROM APUESTA_CAB AC
+JOIN APUESTA_DET AD ON AC.ApuCod = AD.ApuCabCod
+JOIN CLIENTE C ON AC.ApuCliCod = C.CliCod
+LEFT JOIN AFILIADO A ON AC.ApuAfiCod = A.AfiCod
+JOIN PARTIDO P ON AD.ApuDetParCod = P.ParCod
+JOIN EQUIPO_LOCAL EL ON P.ParEquLocCod = EL.EquLocCod
+JOIN EQUIPO ELoc ON EL.EquCod = ELoc.EquCod
+JOIN EQUIPO_VISITANTE EV ON P.ParEquVisCod = EV.EquVisCod
+JOIN EQUIPO EVis ON EV.EquCod = EVis.EquCod
+JOIN TORNEO T ON P.ParTorCod = T.TorCod
+LEFT JOIN EQUIPO EGan ON P.ParGanCod = EGan.EquCod;
